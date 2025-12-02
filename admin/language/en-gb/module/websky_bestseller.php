@@ -1,7 +1,6 @@
 <?php
 // Heading
-$_['heading_title']    = 'Websky Best Seller';
-$_['heading_title']     = '<font color="green">Websky Best Seller</font>';
+$_['heading_title'] = '<img src="https://opencart-ir.com/image/logo25.png" alt="webskygroup" title="webskygroup" /> Websky Best Seller ';
 
 // Text
 $_['text_extension']   = 'Extensions';

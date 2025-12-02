@@ -1,7 +1,6 @@
 <?php
 // Heading
-$_['heading_title']    = 'ماژول بیشترین فروش';
-$_['heading_title']     = '<font color="green">ماژول بیشترین فروش</font>';
+$_['heading_title'] = '<img src="https://opencart-ir.com/image/logo25.png" alt="webskygroup" title="webskygroup" /> بیشترین فروش ';
 
 // Text
 $_['text_extension']   = 'ماژول ها';

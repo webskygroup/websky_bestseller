@@ -5,8 +5,8 @@ class WebskyBestseller extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		
 		$this->load->language('extension/websky_bestseller/module/websky_bestseller');
+				$this->document->setTitle(strip_tags($this->language->get('heading_title')));
 
-		$this->document->setTitle($this->language->get('heading_title'));
 
 	    $data['user_token']=$this->session->data['user_token'];
 
@@ -110,7 +110,7 @@ class WebskyBestseller extends \Opencart\System\Engine\Controller {
 		}
 		
 		$data['user_token']	 = $this->session->data['user_token'];
-		$data['current_version'] = "1.0.5";
+		$data['current_version'] = "1.0.6";
 		$data['upgrade'] = false;
 
 	  $url = 'https://opencart-ir.com/version/index.php?route=extension/websky_lastversion/module/websky_lastversion';
