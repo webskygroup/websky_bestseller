@@ -1,0 +1,295 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end">
+        <button type="submit" form="form-module" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fas fa-reply"></i></a>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item">
+            <a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a>
+          </li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header">
+        <i class="fas fa-pencil-alt"></i> {{ text_form }}
+      </div>
+      <div class="card-body">
+        <form id="form-module" action="{{ save }}" method="post" data-oc-toggle="ajax">
+          <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a href="#tab-setting" data-bs-toggle="tab" class="nav-link active">{{tab_setting}}
+                </a>
+            </li>
+
+              <li class="nav-item">
+              <a href="#tab-update" data-bs-toggle="tab" class="nav-link">{{tab_upgrade}}</a>
+            </li>
+
+          </ul>
+           <div class="tab-content">
+            <div class="tab-pane active" id="tab-setting">
+         
+              <div class="row mb-3">
+                <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
+                  <div id="error-name" class="invalid-feedback"></div>
+                </div>
+              </div>
+              
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="app_name">{{ entry_heading }}</label>
+                <div class="col-sm-10">
+                  <td class="text-left">
+                    {% for language in languages %}
+                      <div class="input-group">
+                        <div class="input-group-text">
+                          <img src="{{ language.image }}" title="{{ language.name }}" />
+                        </div>
+                        <input type="text" name="heading[{{ language.language_id }}]" value="{{ heading[language.language_id] }}" placeholder="" id="app_name" class="form-control" />
+                      </div>
+                    {% endfor %}
+                  </td>
+                </div>
+              </div>
+              
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
+                <div class="col-sm-10">
+                  <select name="status" id="input-status" class="form-control">
+                    {% if status %}
+                      <option value="1" selected="selected">{{ text_enabled }}</option>
+                      <option value="0">{{ text_disabled }}</option>
+                    {% else %}
+                      <option value="1">{{ text_enabled }}</option>
+                      <option value="0" selected="selected">{{ text_disabled }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="app_name">{{ entry_limit }}</label>
+                <div class="col-sm-10">
+                        <input type="text" name="limit" value="{{ limit }}" placeholder="" id="input-name" class="form-control" />
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="app_name">{{ entry_width }}</label>
+                <div class="col-sm-10">
+                        <input type="text" name="width" value="{{ width }}" placeholder="" id="input-name" class="form-control" />
+                </div>
+              </div>
+              
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="app_name">{{ entry_height }}</label>
+                <div class="col-sm-10">
+                        <input type="text" name="height" value="{{ height }}" placeholder="" id="input-name" class="form-control" />
+                </div>
+              </div>
+              
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="input-status">{{ entry_product_type }}</label>
+                <div class="col-sm-10">
+                  <select name="product_type" id="input-status" class="form-control">
+                    {% if product_type == 'new_product' %}
+                      <option value="new_product" selected="selected">{{ text_new_product }}</option>
+                      <option value="best_sales">{{ text_best_sales }}</option>
+                      <option value="feature">{{ text_feature }}</option>
+                     
+                      {% elseif product_type == 'best_sales' %}
+                      <option value="new_product" >{{ text_new_product }}</option>
+                      <option value="best_sales" selected="selected">{{ text_best_sales }}</option>
+                      <option value="feature">{{ text_feature }}</option>
+                      {% else %}
+                      <option value="new_product">{{ text_new_product }}</option>
+                      <option value="best_sales">{{ text_best_sales }}</option>
+                      <option value="feature" selected="selected">{{ text_feature }}</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              
+             <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">{{ entry_product }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" data-oc-target="autocomplete-product" class="form-control" autocomplete="off"/>
+              <ul id="autocomplete-product" class="dropdown-menu"></ul>
+              <div class="form-control p-0" style="height: 150px; overflow: auto;">
+                <table id="featured-product" class="table m-0">
+                  <tbody>
+                    {% for product in products %}
+                      <tr id="featured-product-{{ product.product_id }}">
+                        <td>{{ product.name }}<input type="hidden" name="product[]" value="{{ product.product_id }}"/></td>
+                        <td class="text-end"><button type="button" class="btn btn-danger"><i class="fa-solid fa-circle-minus"></i></button></td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+              <div class="form-text text-muted">{{ help_product }}</div>
+            </div>
+          </div>
+            </div>
+            
+            <div class="tab-pane" id="tab-update">
+                     <fieldset>
+              <legend>{{ text_information }}</legend>
+             <div class="row mb-3">
+            <div class="col">
+              <div class="form-control border rounded-start">
+                <div class="lead"><strong>{{ text_current_version }}</strong>
+                  <br/>
+                  <input type="hidden" name="module_websky_faq_current_version" value="{{ current_version }}"/>
+                  <span{% if upgrade %} class="text-danger"{% endif %}>{{ current_version }}</span>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-control border rounded-start">
+                <div class="lead"><strong>{{ text_latest_version }}</strong>
+                  <br/>
+                  {{ latest_version }}
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-control border rounded-start">
+                <div class="lead"><strong>{{ text_date_added }}</strong>
+                  <br/>
+                  {{ date_added }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-control border rounded-start">
+            <div class="lead"><strong>{{ text_change }}</strong>
+              <br/>
+              {{ log }}
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>{{ text_status }}</legend>
+          <div class="input-group input-group-lg">
+            <button type="button" id="button-upgrade" class="btn btn-warning btn-lg"{% if not upgrade %} disabled{% endif %}><i class="fa-solid fa-level-up-alt"></i> {{ button_upgrade }}</button>
+            <input type="text" id="input-upgrade" value="{{ text_ready }}" class="form-control bg-white" readonly/>
+          </div>
+        </fieldset>
+                </div> 
+
+
+            </div>
+
+            </div>
+           
+          
+        </form>
+     
+    </div>
+ 
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#input-product').autocomplete({
+    source: function (request, response) {
+        $.ajax({
+            url: 'index.php?route=catalog/product.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            dataType: 'json',
+            success: function (json) {
+                response($.map(json, function (item) {
+                    return {
+                        label: item['name'],
+                        value: item['product_id']
+                    }
+                }));
+            }
+        });
+    },
+    select: function (item) {
+        $('#input-product').val('');
+
+        $('#featured-product-' + item['value']).remove();
+
+        html  = '<tr id="featured-product-' + item['value'] + '">';
+        html += '  <td>' + item['label'] + '<input type="hidden" name="product[]" value="' + item['value'] + '"/></td>';
+        html += '  <td class="text-end"><button type="button" class="btn btn-danger"><i class="fa-solid fa-circle-minus"></i></button></td>';
+        html += '</tr>';
+
+        $('#featured-product tbody').append(html);
+    }
+});
+
+$('#featured-product').on('click', '.btn', function () {
+    $(this).parent().parent().remove();
+});
+
+$('#button-upgrade').on('click', function () {
+    var element = this;
+
+    $(element).button('loading');
+
+    $('#progress').html('{{ text_download|escape('js') }}');
+
+    var next = 'index.php?route=extension/websky_bestseller/module/websky_bestseller.download&user_token={{ user_token }}&version={{ latest_version }}&extension_name=websky_bestseller';
+
+    var upgrade = function () {
+        return $.ajax({
+            url: next,
+            dataType: 'json',
+            success: function (json) {
+                $('#input-upgrade').removeClass('is-valid is-invalid');
+
+                if (json['error']) {
+                    $('#input-upgrade').val(json['error']);
+                    $('#input-upgrade').addClass('is-invalid');
+
+                    $(element).button('reset');
+                }
+
+                if (json['text']) {
+                    $('#input-upgrade').val(json['text']);
+                }
+
+                if (json['success']) {
+                    $('#input-upgrade').val(json['success']);
+                    $('#input-upgrade').addClass('is-valid');
+
+                    $(element).button('reset');
+                    
+                }
+                
+                if (json['next']) {
+                    next = json['next'];
+
+                    chain.attach(upgrade);
+                    
+                }
+                if (!json['next']) {
+                location.reload();
+                }
+                
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+
+                $(element).button('reset');
+            }
+        });
+    };
+
+    chain.attach(upgrade);
+});
+
+//--></script>
+
+{{ footer }}

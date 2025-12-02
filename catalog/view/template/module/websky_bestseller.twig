@@ -1,0 +1,128 @@
+<div class="product-box-two py-20">
+        <div class="container-fluid">
+            <div class="parents">
+                <div class="row">
+                    <div class="col-lg-3 col-12 mt-md-0 mt-3 order-2">
+                        <div class="swiper sugget-slider">
+                            <div class="swiper-wrapper">
+                                {%for product in products%}
+                                <div class="swiper-slide">
+                                    <div class="sugget-item" style="height: 380px">
+                                        <div class="timer text-center">
+                                            <div class='countdown' data-date="2028-01-01" data-time="18:30">
+                                            </div>
+                                        </div>
+                                        <div class="image">
+                                            <img src="{{product.thumb}}" alt="" class="img-fluid">
+                                        </div>
+                                        <div class="title">
+                                            <h6 class="fw-bold font-14">{{product.name}}</h6>
+                                        </div>
+                                        <div class="foot d-flex justify-content-between align-items-center">
+                                            <div class="add">
+                                                <a href="" data-hint="افزودن به سبد خرید" class="hint--right">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                        fill="currentColor" class="bi bi-bag" viewBox="0 0 16 16">
+                                                        <path
+                                                            d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
+                                                    </svg>
+                                                </a>
+                                            </div>
+                                            <div class="price d-flex flex-column justify-content-end">
+                                                  {% if not product.special %}
+                                                  
+                                            <div class="d-flex justify-content-center align-items-center">
+                                                    <span
+                                                    <span class="fw-bold font-18 def-color">{{product.price}}</span>
+                                                </div>
+                                             {% else %}
+
+                                                 <div>
+                                                    <span class="fw-bold font-18 def-color">{{product.special}}</span>
+                                                    <span class="badge main-color-two-bg rounded-pill">25%</span>
+                                                </div>
+                                                <div class="d-flex justify-content-center align-items-center">
+                                                    <span
+                                                        class="text-muted font-14 text-decoration-line-through">{{product.price}}</span>
+                                                </div>
+                                               {% endif %}
+                                                
+                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {%endfor%}
+                    
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-9 order-1">
+                        <div class="parent">
+                            <div class="content-title d-flex align-items-center justify-content-between pb-4">
+                                <div class="item d-flex align-items-center justify-content-between">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-box-seam me-2" viewBox="0 0 16 16">
+                                        <path
+                                            d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.961L10.404 2l-2.218-.887zm3.564 1.426L5.596 5 8 5.961 14.154 3.5l-2.404-.961zm3.25 1.7-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464L7.443.184z" />
+                                    </svg>
+                                    <h5 class="title font-16">{{heading}}</h5>
+                                </div>
+                                {#<div class="item d-flex align-items-center justify-content-between">#}
+                                {#    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"#}
+                                {#        class="bi bi-box-arrow-in-left me-2" viewBox="0 0 16 16">#}
+                                {#        <path fill-rule="evenodd"#}
+                                {#            d="M10 3.5a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 1 1 0v2A1.5 1.5 0 0 1 9.5 14h-8A1.5 1.5 0 0 1 0 12.5v-9A1.5 1.5 0 0 1 1.5 2h8A1.5 1.5 0 0 1 11 3.5v2a.5.5 0 0 1-1 0v-2z" />#}
+                                {#        <path fill-rule="evenodd"#}
+                                {#            d="M4.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H14.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z" />#}
+                                {#    </svg>#}
+                                {#    <a href="" class="text-white">#}
+                                {#        <h5 class="title font-14">{{text_show_all}}</h5>#}
+                                {#    </a>#}
+                                {#</div>#}
+                            </div>
+                            <div class="row">
+                                {%for product in products%}
+                                <div class="col-lg-4 col-sm-6">
+                                    <a href="{{product.href}}">
+                                        <div
+                                            class="product-row bg-white d-flex align-items-center justify-content-between rounded-4 shadow-md">
+                                            <div class="image">
+                                                <img src="{{product.thumb}}" class="img-fluid"
+                                                    width="100" alt="">
+                                            </div>
+                                            <div class="desc">
+                                                <h6 class="font-14 title text-overflow">{{product.name}}</h6>
+                                            <div class="price d-flex flex-column justify-content-end">
+                                                  {% if not product.special %}
+                                                  
+                                            <div class="d-flex justify-content-center align-items-center">
+                                                    <span
+                                                    <span class="fw-bold font-18 def-color">{{product.price}}</span>
+                                                </div>
+                                             {% else %}
+
+                                                 <div>
+                                                    <span class="fw-bold font-18 def-color">{{product.special}}</span>
+                                                    <span class="badge main-color-two-bg rounded-pill">25%</span>
+                                                </div>
+                                                <div class="d-flex justify-content-center align-items-center">
+                                                    <span
+                                                        class="text-muted font-14 text-decoration-line-through">{{product.price}}</span>
+                                                </div>
+                                               {% endif %}
+                                                
+                                               
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                {%endfor%}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
