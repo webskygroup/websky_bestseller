@@ -1,0 +1,68 @@
+name: Build OCMOD and Upload via FTP
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check FTP credentials
+        id: credentials
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          if [[ -n "$FTP_SERVER" && -n "$FTP_USERNAME" && -n "$FTP_PASSWORD" ]]; then
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::warning::FTP_SERVER, FTP_USERNAME, and FTP_PASSWORD secrets must be configured."
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Prepare package metadata
+        if: steps.credentials.outputs.configured == 'true'
+        id: meta
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          RAW_MODULE="${GITHUB_REPOSITORY##*/}"
+
+          if [[ "$RAW_MODULE" =~ _[Vv]3$ ]]; then
+            REMOTE_PATH="/public_html/dl/v3/"
+            CLEAN_MODULE="${RAW_MODULE%_v3}"
+            CLEAN_MODULE="${CLEAN_MODULE%_V3}"
+          else
+            REMOTE_PATH="/public_html/dl/"
+            CLEAN_MODULE="$RAW_MODULE"
+          fi
+
+          echo "zip=${CLEAN_MODULE}.ocmod.zip" >> "$GITHUB_OUTPUT"
+          echo "remote=${REMOTE_PATH}" >> "$GITHUB_OUTPUT"
+
+      - name: Create ZIP
+        if: steps.credentials.outputs.configured == 'true'
+        run: |
+          mkdir -p dist
+          zip -r "dist/${{ steps.meta.outputs.zip }}" . \
+            -x ".git/*" ".github/*" "dist/*"
+
+      - name: Upload package
+        if: steps.credentials.outputs.configured == 'true'
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: 21
+          protocol: ftp
+          local-dir: dist/
+          server-dir: ${{ steps.meta.outputs.remote }}
