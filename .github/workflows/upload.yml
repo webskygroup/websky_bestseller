@@ -66,3 +66,4 @@ jobs:
           protocol: ftp
           local-dir: dist/
           server-dir: ${{ steps.meta.outputs.remote }}
+          state-name: .ftp-deploy-sync-state-websky_bestseller-upload-1.json
